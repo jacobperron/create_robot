@@ -39,22 +39,14 @@ CreateDriver::CreateDriver(std::shared_ptr<rclcpp::Node> nh)
     diagnostics_(nh),
     is_running_slowly_(false)
 {
-  nh_->declare_parameter<std::string>("dev", "/dev/ttyUSB0");
-  nh_->declare_parameter<std::string>("robot_model", "CREATE_2");
-  nh_->declare_parameter<std::string>("base_frame", "base_footprint");
-  nh_->declare_parameter<std::string>("odom_frame", "odom");
-  nh_->declare_parameter<double>("latch_cmd_duration", 0.2);
-  nh_->declare_parameter<double>("loop_hz", 10.0);
-  nh_->declare_parameter<bool>("publish_tf", true);
+  dev_ = nh_->declare_parameter<std::string>("dev", "/dev/ttyUSB0");
+  base_frame_ = nh_->declare_parameter<std::string>("base_frame", "base_footprint");
+  odom_frame_ = nh_->declare_parameter<std::string>("odom_frame", "odom");
+  latch_duration_ = nh_->declare_parameter<double>("latch_cmd_duration", 0.2);
+  loop_hz_ = nh_->declare_parameter<double>("loop_hz", 10.0);
+  publish_tf_ = nh_->declare_parameter<bool>("publish_tf", true);
 
-  nh_->get_parameter("dev", dev_);
-  nh_->get_parameter("base_frame", base_frame_);
-  nh_->get_parameter("odom_frame", odom_frame_);
-  nh_->get_parameter("latch_cmd_duration", latch_duration_);
-  nh_->get_parameter("loop_hz", loop_hz_);
-  nh_->get_parameter("publish_tf", publish_tf_);
-
-  auto robot_model_name = nh_->get_parameter("robot_model").as_string();
+  auto robot_model_name = nh_->declare_parameter<std::string>("robot_model", "CREATE_2");
   if (robot_model_name == "ROOMBA_400")
   {
     model_ = create::RobotModel::ROOMBA_400;
@@ -76,8 +68,7 @@ CreateDriver::CreateDriver(std::shared_ptr<rclcpp::Node> nh)
 
   RCLCPP_INFO_STREAM(nh_->get_logger(), "[CREATE] \"" << robot_model_name << "\" selected");
 
-  nh_->declare_parameter<int>("baud", model_.getBaud());
-  nh_->get_parameter("baud", baud_);
+  baud_ = nh_->declare_parameter<int>("baud", model_.getBaud());
 
   robot_ = new create::Create(model_);
 
