@@ -63,11 +63,11 @@ _* Not verified. Anyone who is able to verify that this driver works or not is e
 #### Prerequisites
 
 * Internet connection
-* [ROS](http://wiki.ros.org/ROS/Installation) _Foxy_
-* Ubuntu packages: `python3-rosdep2`, `python3-colcon-common-extensions`
+* [ROS](https://index.ros.org/doc/ros2/Installation) _Foxy_
+* Ubuntu packages: `python3-rosdep`, `python3-colcon-common-extensions`
 
 ``` bash
-$ sudo apt install python3-rosdep2 python3-colcon-common-extensions
+$ sudo apt install python3-rosdep python3-colcon-common-extensions
 ```
 
 #### Compiling
