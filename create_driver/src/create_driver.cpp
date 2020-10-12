@@ -35,27 +35,26 @@ POSSIBILITY OF SUCH DAMAGE.
 CreateDriver::CreateDriver(std::shared_ptr<rclcpp::Node> nh)
   : model_(create::RobotModel::CREATE_2),
     nh_(nh),
-    priv_nh_(rclcpp::Node::make_shared("_")),
     tf_broadcaster_(nh),
     diagnostics_(nh),
     is_running_slowly_(false)
 {
-  priv_nh_->declare_parameter<std::string>("dev", "/dev/ttyUSB0");
-  priv_nh_->declare_parameter<std::string>("robot_model", "CREATE_2");
-  priv_nh_->declare_parameter<std::string>("base_frame", "base_footprint");
-  priv_nh_->declare_parameter<std::string>("odom_frame", "odom");
-  priv_nh_->declare_parameter<double>("latch_cmd_duration", 0.2);
-  priv_nh_->declare_parameter<double>("loop_hz", 10.0);
-  priv_nh_->declare_parameter<bool>("publish_tf", true);
+  nh_->declare_parameter<std::string>("dev", "/dev/ttyUSB0");
+  nh_->declare_parameter<std::string>("robot_model", "CREATE_2");
+  nh_->declare_parameter<std::string>("base_frame", "base_footprint");
+  nh_->declare_parameter<std::string>("odom_frame", "odom");
+  nh_->declare_parameter<double>("latch_cmd_duration", 0.2);
+  nh_->declare_parameter<double>("loop_hz", 10.0);
+  nh_->declare_parameter<bool>("publish_tf", true);
 
-  priv_nh_->get_parameter("dev", dev_);
-  priv_nh_->get_parameter("base_frame", base_frame_);
-  priv_nh_->get_parameter("odom_frame", odom_frame_);
-  priv_nh_->get_parameter("latch_cmd_duration", latch_duration_);
-  priv_nh_->get_parameter("loop_hz", loop_hz_);
-  priv_nh_->get_parameter("publish_tf", publish_tf_);
+  nh_->get_parameter("dev", dev_);
+  nh_->get_parameter("base_frame", base_frame_);
+  nh_->get_parameter("odom_frame", odom_frame_);
+  nh_->get_parameter("latch_cmd_duration", latch_duration_);
+  nh_->get_parameter("loop_hz", loop_hz_);
+  nh_->get_parameter("publish_tf", publish_tf_);
 
-  auto robot_model_name = priv_nh_->get_parameter("robot_model").as_string();
+  auto robot_model_name = nh_->get_parameter("robot_model").as_string();
   if (robot_model_name == "ROOMBA_400")
   {
     model_ = create::RobotModel::ROOMBA_400;
@@ -77,8 +76,8 @@ CreateDriver::CreateDriver(std::shared_ptr<rclcpp::Node> nh)
 
   RCLCPP_INFO_STREAM(nh_->get_logger(), "[CREATE] \"" << robot_model_name << "\" selected");
 
-  priv_nh_->declare_parameter<int>("baud", model_.getBaud());
-  priv_nh_->get_parameter("baud", baud_);
+  nh_->declare_parameter<int>("baud", model_.getBaud());
+  nh_->get_parameter("baud", baud_);
 
   robot_ = new create::Create(model_);
 
