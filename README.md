@@ -123,17 +123,17 @@ $ sudo apt install python3-rosdep python3-colcon-common-extensions
 
 For Create 2 (Roomba 600/700 series):
 ``` bash
-$ ros2 launch create_bringup create_2.xml
+$ ros2 launch create_bringup create_2.launch
 ```
 
 For Create 1 (Roomba 500 series):
 ``` bash
-$ ros2 launch create_bringup create_1.xml
+$ ros2 launch create_bringup create_1.launch
 ```
 
 For Roomba 400 series:
 ``` bash
-$ ros2 launch create_bringup roomba_400.xml
+$ ros2 launch create_bringup roomba_400.launch
 ```
 
 #### Launch file arguments
@@ -144,7 +144,7 @@ $ ros2 launch create_bringup roomba_400.xml
 For example, if you would like to disable the robot description and provide a custom configuration file:
 
 ```bash
-$ ros2 launch create_bringup create_2.xml config:=/abs/path/to/config.yaml desc:=false
+$ ros2 launch create_bringup create_2.launch config:=/abs/path/to/config.yaml desc:=false
 ```
 
 ### Parameters
@@ -221,7 +221,7 @@ angular.z (+)     Rotate counter-clockwise (rad/s)
 `create_bringup` comes with a launch file for teleoperating Create with a joystick.
 
 ``` bash
-$ ros2 launch create_bringup joy_teleop.xml [joy_config:=xbox360]
+$ ros2 launch create_bringup joy_teleop.launch [joy_config:=xbox360]
 ```
 
 There exists configuration files for the [Xbox 360 wired controller](https://www.amazon.ca/Microsoft-Xbox-360-Wired-Controller/dp/B003ZSN600) and the [Logitech F710 controller](http://gaming.logitech.com/en-ca/product/f710-wireless-gamepad). You can adapt these files for your preferred joystick configuration.
