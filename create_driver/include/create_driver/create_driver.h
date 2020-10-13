@@ -65,7 +65,6 @@ private:
   create::RobotModel model_;
 
   std::shared_ptr<rclcpp::Node> nh_;
-  std::shared_ptr<rclcpp::Node> priv_nh_;
 
   rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_sub_;
   rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr debris_led_sub_;
